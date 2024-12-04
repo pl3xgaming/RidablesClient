@@ -261,14 +261,18 @@ public class MobScreen extends AbstractScreen {
             // mouse was already down from previous screen, ignore
             return false;
         }
-        if (button == 0) {
-            this.previewYaw -= (float) (mouseX - this.mouseDownX);
-            this.previewPitch -= (float) (mouseY - this.mouseDownY);
-            clampYawPitch();
-        } else if (button == 1) {
-            this.previewX += (mouseX - this.mouseDownX);
-            this.previewY += (mouseY - this.mouseDownY);
+        if (mouseDownX != 0 && mouseDownY != 0) {
+            // only move if the mouse wasn't just dragged
+            if (button == 0) {
+                this.previewYaw -= (float) (mouseX - this.mouseDownX);
+                this.previewPitch -= (float) (mouseY - this.mouseDownY);
+                clampYawPitch();
+            } else if (button == 1) {
+                this.previewX += mouseX - this.mouseDownX;
+                this.previewY += mouseY - this.mouseDownY;
+            }
         }
+
         this.mouseDownX = mouseX;
         this.mouseDownY = mouseY;
         return false;
